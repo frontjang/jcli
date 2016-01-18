@@ -12,25 +12,25 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import argparse
 import sys
 
-
-def get_argument_parser():
-    parser = argparse.ArgumentParser(prog='jeni')
-    parser.add_argument('--version', action='version', version=get_version())
-    return parser
-
-
-def get_version():
-    return "jeni 0.0.1"
+import core
+import parse
 
 
 def main():
-    parser = get_argument_parser()
+    """Main program"""
+    manager = core.Manager()
+    parser = parse.get_argument_parser()
+
+    # Print help if no arguments provided
     if len(sys.argv) == 1:
         parser.print_help()
-    parser.parse_args()
+    # Parse arguments
+    args = parser.parse_args(sys.argv[1:])
+    action = args.action
+    # Run actio
+    manager.run_action(action)
 
 
 if __name__ == '__main__':

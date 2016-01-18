@@ -13,16 +13,14 @@
 #    under the License.
 
 
-class Arg(object):
-    def __init__(self, name, shortcut=None, metavar=None, action=None):
-        self.name = name
-        self.shortcut = shortcut
-        self.metavar = metavar
-        self.action = action
+import argparse
 
 
-class Action(object):
-    def __init__(self, name, optional_args=None, help=None):
-        self.name = name
-        self.optional_args = optional_args
-        self.help = help
+def get_argument_parser():
+    parser = argparse.ArgumentParser(prog='jeni')
+    parser.add_argument('--version', action='version', version=get_version())
+    return parser
+
+
+def get_version():
+    return "jeni 0.0.1"
