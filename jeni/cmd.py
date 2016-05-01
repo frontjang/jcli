@@ -12,27 +12,51 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import argparse
+import getpass
 import sys
 
-import core
-import parse
+
+def get_version():
+    """Returns jeni version."""
+    return "Jeni 0.0.1"
+
+
+def create_parser():
+    """Returns argument parser"""
+
+    parent_parser = argparse.ArgumentParser(add_help=False)
+    parent_parser.add_argument('--user', '-u', default=getpass.getuser(),
+                               help='username')
+    parent_parser.add_argument('--debug', required=False, action='store_true',
+                               dest="debug", help='debug flag')
+
+    main_parser = argparse.ArgumentParser()
+
+    jeni_subparsers = main_parser.add_subparsers(title="jeni",
+                                                 dest="jeni_command")
+    job_parser = jeni_subparsers.add_parser("job", parents=[parent_parser])
+
+    job_action_subparser = job_parser.add_subparsers(title="action",
+                                                     dest="action_command")
+    job_list_parser = job_action_subparser.add_parser(
+        "list", help="list job(s)", parents=[parent_parser])
+    job_list_parser.add_argument('name(s)', help='job(s) name(s)')
+    job_delete_parser = job_action_subparser.add_parser(
+        "delete", help="delete job", parents=[parent_parser])
+    job_delete_parser.add_argument('name(s)', help='job(s) name(s)')
+
+    return main_parser
 
 
 def main():
-    """Main program"""
-    manager = core.Manager()
-    parser = parse.get_argument_parser()
+    """Jeni Main Entry."""
 
-    # Print help if no arguments provided
-    if len(sys.argv) == 1:
-        parser.print_help()
-    # Parse arguments
-    args = parser.parse_args(sys.argv[1:])
-    action = args.action
-    # Run actio
-    manager.run_action(action)
+    parser = create_parser()
+    args = parser.parse_args()
 
+    print (args)
+    print("Jeni is not ready yet. Try again at 2017.")
 
 if __name__ == '__main__':
-    exit_code = main()
-    sys.exit(exit_code)
+    sys.exit(main())

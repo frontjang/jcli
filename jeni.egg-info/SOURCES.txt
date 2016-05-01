@@ -3,6 +3,8 @@ jeni/action.py
 jeni/actions.py
 jeni/cmd.py
 jeni/connection.py
+jeni/core.py
+jeni/summary.py
 jeni.egg-info/PKG-INFO
 jeni.egg-info/SOURCES.txt
 jeni.egg-info/dependency_links.txt
