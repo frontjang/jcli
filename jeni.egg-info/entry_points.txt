@@ -1,3 +1,0 @@
-[console_scripts]
-jeni = jeni.cmd:main
-

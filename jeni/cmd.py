@@ -13,6 +13,7 @@
 #    under the License.
 
 import argparse
+from executor.job import Job
 import getpass
 import sys
 
@@ -32,16 +33,17 @@ def create_parser():
                                dest="debug", help='debug flag')
 
     main_parser = argparse.ArgumentParser()
-
     jeni_subparsers = main_parser.add_subparsers(title="jeni",
-                                                 dest="jeni_command")
-    job_parser = jeni_subparsers.add_parser("job", parents=[parent_parser])
+                                                 dest="main_command")
 
+    job_parser = jeni_subparsers.add_parser("job", parents=[parent_parser])
     job_action_subparser = job_parser.add_subparsers(title="action",
-                                                     dest="action_command")
+                                                     dest="job_command")
+
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
     job_list_parser.add_argument('name(s)', help='job(s) name(s)')
+
     job_delete_parser = job_action_subparser.add_parser(
         "delete", help="delete job", parents=[parent_parser])
     job_delete_parser.add_argument('name(s)', help='job(s) name(s)')
@@ -55,7 +57,10 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
 
-    print (args)
+    if args.main_command == 'job':
+        job_executor = Job(args.job_command)
+        job_executor.run()
+
     print("Jeni is not ready yet. Try again at 2017.")
 
 if __name__ == '__main__':
