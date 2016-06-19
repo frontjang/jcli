@@ -13,15 +13,19 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+from server import Server
 
-class Job(object):
+class Job(Server):
 
-    def __init__(self, action):
-        
+    def __init__(self, action, url, user, password):
+        super(Job, self).__init__(url, user, password)
         self.action = action
 
     def run(self):
         """Execute chosen action."""
 
         if self.action == 'list':
-            print 'List jobs!'
+            pass
+
+        if self.action == 'count':
+            print "Number of jobs: {}".format(self.server.jobs_count())

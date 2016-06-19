@@ -50,3 +50,16 @@ def read(conf_file):
             "\n{0} is not a valid configuration file".format(config_file))
 
     return config
+
+def get_value(config, section, option):
+    """
+    Get the value of specific option in given section.
+
+    :param config: the configuration object.
+    :param section: the name of the section.
+    :param option: the name of the option.
+    """
+
+    value = config.get(section, option)
+
+    return value

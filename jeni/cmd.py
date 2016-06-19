@@ -43,6 +43,8 @@ def create_parser():
     job_action_subparser = job_parser.add_subparsers(title="action",
                                                      dest="job_command")
 
+    job_count_parser = job_action_subparser.add_parser(
+        "count", help="Number of jobs", parents=[parent_parser])
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
     job_list_parser.add_argument('string', help='part of the job name',
@@ -64,9 +66,14 @@ def main():
 
     # Set config object that will hold information on the Jenkins server
     run_config = config.read(args.config)
+    
+    # Get url, user and password to be able setup connection to the server
+    url = config.get_value(run_config, 'jenkins', 'url')
+    user = config.get_value(run_config, 'jenkins', 'user')
+    password = config.get_value(run_config, 'jenkins', 'password')
 
     if args.main_command == 'job':
-        job_executor = Job(args.job_command)
+        job_executor = Job(args.job_command, url, user, password)
         job_executor.run()
 
     print("Jeni is not ready yet. Try again at 2017.")
