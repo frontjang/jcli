@@ -17,12 +17,10 @@ import jenkins
 
 
 class Server(object):
-    """
-    A base class for Jeni Execute.
+    """A base class for Jeni Execute.
 
     The module is initialized before any command is executed.
     """
 
     def __init__(self, url, user, password):
-        self.server = jenkins.Jenkins(url , user, password)
-
+        self.server = jenkins.Jenkins(url, user, password)

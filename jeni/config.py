@@ -12,7 +12,6 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import errors
 import io
 import logging
 import os
@@ -21,6 +20,7 @@ from six.moves import configparser
 from errors import JeniException
 
 DEFAULT_CONF_FILE = '/etc/jeni/jeni.conf'
+
 
 def read(conf_file):
     """Returns config parser object.
@@ -51,9 +51,9 @@ def read(conf_file):
 
     return config
 
+
 def get_value(config, section, option):
-    """
-    Get the value of specific option in given section.
+    """Get the value of specific option in given section.
 
     :param config: the configuration object.
     :param section: the name of the section.

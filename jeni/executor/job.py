@@ -13,7 +13,12 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import logging
 from server import Server
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
+
 
 class Job(Server):
 
@@ -28,4 +33,4 @@ class Job(Server):
             pass
 
         if self.action == 'count':
-            print "Number of jobs: {}".format(self.server.jobs_count())
+            logger.info("Number of jobs: {}".format(self.server.jobs_count()))

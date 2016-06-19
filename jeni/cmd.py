@@ -31,7 +31,8 @@ def create_parser():
     parent_parser = argparse.ArgumentParser(add_help=False)
     parent_parser.add_argument('--user', '-u', default=getpass.getuser(),
                                help='username')
-    parent_parser.add_argument('--config', '-c', dest="config", help='jeni configuration file')
+    parent_parser.add_argument('--config', '-c', dest="config",
+                               help='jeni configuration file')
     parent_parser.add_argument('--debug', required=False, action='store_true',
                                dest="debug", help='debug flag')
 
@@ -43,7 +44,7 @@ def create_parser():
     job_action_subparser = job_parser.add_subparsers(title="action",
                                                      dest="job_command")
 
-    job_count_parser = job_action_subparser.add_parser(
+    job_action_subparser.add_parser(
         "count", help="Number of jobs", parents=[parent_parser])
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
@@ -66,7 +67,7 @@ def main():
 
     # Set config object that will hold information on the Jenkins server
     run_config = config.read(args.config)
-    
+
     # Get url, user and password to be able setup connection to the server
     url = config.get_value(run_config, 'jenkins', 'url')
     user = config.get_value(run_config, 'jenkins', 'user')
