@@ -13,6 +13,7 @@
 #    under the License.
 
 import argparse
+import config
 from executor.job import Job
 import getpass
 import sys
@@ -26,9 +27,11 @@ def get_version():
 def create_parser():
     """Returns argument parser"""
 
+    # Jeni top level arguments
     parent_parser = argparse.ArgumentParser(add_help=False)
     parent_parser.add_argument('--user', '-u', default=getpass.getuser(),
                                help='username')
+    parent_parser.add_argument('--config', '-c', dest="config", help='jeni configuration file')
     parent_parser.add_argument('--debug', required=False, action='store_true',
                                dest="debug", help='debug flag')
 
@@ -42,7 +45,8 @@ def create_parser():
 
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
-    job_list_parser.add_argument('name(s)', help='job(s) name(s)')
+    job_list_parser.add_argument('string', help='part of the job name',
+                                 nargs='?')
 
     job_delete_parser = job_action_subparser.add_parser(
         "delete", help="delete job", parents=[parent_parser])
@@ -54,8 +58,12 @@ def create_parser():
 def main():
     """Jeni Main Entry."""
 
+    # Parse arguments provided by the user
     parser = create_parser()
     args = parser.parse_args()
+
+    # Set config object that will hold information on the Jenkins server
+    run_config = config.read(args.config)
 
     if args.main_command == 'job':
         job_executor = Job(args.job_command)
