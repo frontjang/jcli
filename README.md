@@ -44,6 +44,10 @@ Print the number of jobs on Jenkins server:
 
     python jeni/cmd.py job count
 
+Delete job:
+   
+    python jeni/cmd.py job delete <job_name>
+
 License
 -------
 

@@ -54,7 +54,8 @@ def create_parser():
                                  nargs='?')
     job_delete_parser = job_action_subparser.add_parser(
         "delete", help="delete job", parents=[parent_parser])
-    job_delete_parser.add_argument('name(s)', help='job(s) name(s)')
+    job_delete_parser.add_argument('name',
+                                   help='the name of the job to delete')
 
     return main_parser
 

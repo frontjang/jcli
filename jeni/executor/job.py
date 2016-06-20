@@ -13,6 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import errors
 import logging
 from server import Server
 
@@ -44,11 +45,27 @@ class Job(Server):
 
         return jobs_names
 
+    def delete_job(self):
+        """Removes job from the server"""
+
+        if self.name:
+            try:
+                self.server.delete_job(self.name)
+            except Exception:
+                raise errors.JeniException("No such job: {}".format(self.name))
+            logger.info("Removed job: {}".format(self.name))
+        else:
+            logger.info("No name provided. Exiting...")
+
     def run(self):
         """Executes chosen action."""
 
-        for job in self.get_jobs_names():
-            logger.info(job)
+        if self.action == 'list':
+            for job in self.get_jobs_names():
+                logger.info(job)
 
         if self.action == 'count':
             logger.info("Number of jobs: {}".format(self.server.jobs_count()))
+
+        if self.action == 'delete':
+            self.delete_job()
