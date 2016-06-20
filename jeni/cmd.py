@@ -15,6 +15,7 @@
 import argparse
 import config
 from executor.job import Job
+from executor.view import View
 import getpass
 import sys
 
@@ -45,17 +46,32 @@ def create_parser():
     job_action_subparser = job_parser.add_subparsers(title="action",
                                                      dest="job_command")
 
-    # Job sub commands (count, list, delete)
+    # Job sub-commands (count, list, delete)
     job_action_subparser.add_parser(
         "count", help="Number of jobs", parents=[parent_parser])
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
-    job_list_parser.add_argument('name', help='part of the job name',
+    job_list_parser.add_argument('name', help='job name of part of it',
                                  nargs='?')
     job_delete_parser = job_action_subparser.add_parser(
         "delete", help="delete job", parents=[parent_parser])
     job_delete_parser.add_argument('name',
                                    help='the name of the job to delete')
+
+    # View parser
+    view_parser = jeni_subparsers.add_parser("view", parents=[parent_parser])
+    view_action_subparser = view_parser.add_subparsers(title="action",
+                                                       dest="view_command")
+
+    # View sub-commands
+    view_list_parser = view_action_subparser.add_parser(
+        "list", help="list view(s)", parents=[parent_parser])
+    view_list_parser.add_argument('name', help='view name or part of it',
+                                  nargs='?')
+    view_delete_parser = view_action_subparser.add_parser(
+        "delete", help="delete view", parents=[parent_parser])
+    view_delete_parser.add_argument('name',
+                                    help='the name of the view to delete')
 
     return main_parser
 
@@ -75,9 +91,23 @@ def main():
     user = config.get_value(run_config, 'jenkins', 'user')
     password = config.get_value(run_config, 'jenkins', 'password')
 
+    # 'job' command
     if args.main_command == 'job':
-        job_executor = Job(args.job_command, url, user, password, args.name)
+        if hasattr(args, 'name'):
+            job_executor = Job(args.job_command, url, user, password,
+                               args.name)
+        else:
+            job_executor = Job(args.job_command, url, user, password)
         job_executor.run()
+
+    # 'view' command
+    if args.main_command == 'view':
+        if hasattr(args, 'name'):
+            view_executor = View(args.view_command, url, user, password,
+                                 args.name)
+        else:
+            view_executor = View(args.view_command, url, user, password)
+        view_executor.run()
 
 if __name__ == '__main__':
     sys.exit(main())

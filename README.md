@@ -32,6 +32,8 @@ Minimal configuartion is:
 Examples
 --------
 
+### Job examples
+
 Print list of all the jobs:
 
     python jeni/cmd.py job list
@@ -47,6 +49,20 @@ Print the number of jobs on Jenkins server:
 Delete job:
    
     python jeni/cmd.py job delete <job_name>
+
+### View examples
+
+List all views:
+
+    python jeni/cmd.py view list
+
+List views that contain the string 'hello':
+
+    python jeni/cmd.py view list hello
+
+Delete view:
+
+    python jeni/cmd.py view delete <view_name>
 
 License
 -------
