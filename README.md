@@ -32,6 +32,14 @@ Minimal configuartion is:
 Examples
 --------
 
+Print list of all the jobs:
+
+    python jeni/cmd.py job list
+
+Print jobs which contain the string 'coreci' in their names:
+
+    python jeni/cmd.py job list coreci
+
 Print the number of jobs on Jenkins server:
 
     python jeni/cmd.py job count

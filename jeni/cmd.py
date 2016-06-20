@@ -40,17 +40,18 @@ def create_parser():
     jeni_subparsers = main_parser.add_subparsers(title="jeni",
                                                  dest="main_command")
 
+    # Job parser
     job_parser = jeni_subparsers.add_parser("job", parents=[parent_parser])
     job_action_subparser = job_parser.add_subparsers(title="action",
                                                      dest="job_command")
 
+    # Job sub commands (count, list, delete)
     job_action_subparser.add_parser(
         "count", help="Number of jobs", parents=[parent_parser])
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
-    job_list_parser.add_argument('string', help='part of the job name',
+    job_list_parser.add_argument('name', help='part of the job name',
                                  nargs='?')
-
     job_delete_parser = job_action_subparser.add_parser(
         "delete", help="delete job", parents=[parent_parser])
     job_delete_parser.add_argument('name(s)', help='job(s) name(s)')
@@ -74,10 +75,8 @@ def main():
     password = config.get_value(run_config, 'jenkins', 'password')
 
     if args.main_command == 'job':
-        job_executor = Job(args.job_command, url, user, password)
+        job_executor = Job(args.job_command, url, user, password, args.name)
         job_executor.run()
-
-    print("Jeni is not ready yet. Try again at 2017.")
 
 if __name__ == '__main__':
     sys.exit(main())
