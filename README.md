@@ -36,33 +36,43 @@ Examples
 
 Print list of all the jobs:
 
-    python jeni/cmd.py job list
+    jeni job list
 
 Print jobs which contain the string 'coreci' in their names:
 
-    python jeni/cmd.py job list coreci
+    jeni job list coreci
 
 Print the number of jobs on Jenkins server:
 
-    python jeni/cmd.py job count
+    jeni job count
 
 Delete job:
    
-    python jeni/cmd.py job delete <job_name>
+    jeni job delete <job_name>
 
 ### View examples
 
 List all views:
 
-    python jeni/cmd.py view list
+    jeni view list
 
 List views that contain the string 'hello':
 
-    python jeni/cmd.py view list hello
+    jeni view list hello
 
 Delete view:
 
-    python jeni/cmd.py view delete <view_name>
+    jeni view delete <view_name>
+
+### Node examples
+
+List all nodes:
+
+    jeni node list
+
+Delete node:
+
+    jeni node delete <node_name>
 
 License
 -------

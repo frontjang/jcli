@@ -15,6 +15,7 @@
 import argparse
 import config
 from executor.job import Job
+from executor.node import Node
 from executor.view import View
 import getpass
 import sys
@@ -73,6 +74,26 @@ def create_parser():
     view_delete_parser.add_argument('name',
                                     help='the name of the view to delete')
 
+    # Node parser
+    node_parser = jeni_subparsers.add_parser("node", parents=[parent_parser])
+    node_action_subparser = node_parser.add_subparsers(title="action",
+                                                       dest="node_command")
+
+    # Node sub-commands
+    node_list_parser = node_action_subparser.add_parser(
+        "list", help="list node(s)", parents=[parent_parser])
+    node_list_parser.add_argument('name', help='node name or part of it',
+                                  nargs='?')
+    node_delete_parser = node_action_subparser.add_parser(
+        "delete", help="delete node", parents=[parent_parser])
+    node_delete_parser.add_argument('name',
+                                    help='the name of the node to delete')
+
+    return main_parser
+
+
+def main():
+    """Jeni Main Entry."""
     return main_parser
 
 
@@ -108,6 +129,15 @@ def main():
         else:
             view_executor = View(args.view_command, url, user, password)
         view_executor.run()
+
+    # 'node' command
+    if args.main_command == 'node':
+        if hasattr(args, 'name'):
+            node_executor = Node(args.node_command, url, user, password,
+                                 args.name)
+        else:
+            node_executor = Node(args.node_command, url, user, password)
+        node_executor.run()
 
 if __name__ == '__main__':
     sys.exit(main())
