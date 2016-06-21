@@ -13,7 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import errors
+import jeni.errors as errors
 import logging
 from server import Server
 

@@ -3,12 +3,12 @@ Jeni
 
 Jenkins Swiss Knife
 
-Requirements
-------------
+Install
+-------
 
-Install requirements with:
+To install Jeni on your system, run the following command:
 
-    pip install -r requirements.txt
+    sudo pip install .
 
 Setup config
 ------------

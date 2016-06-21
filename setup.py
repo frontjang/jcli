@@ -12,30 +12,8 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from jeni import __version__
-import re
 import setuptools
 
-
-def requires():
-    try:
-        reqs = map(str.strip, open('requirements.txt').readlines())
-        reqs = filter(lambda s: re.match('\w', s), reqs)
-        return reqs
-    except Exception:
-        pass
-    return []
-
 setuptools.setup(
-    name='jeni',
-    version=__version__,
-    description='Jenkins swiss knife',
-    author='Arie Bregman',
-    author_email='abregman@redhat.com',
-    url='https://github.com/abregman/jeni',
-    packages=['jeni'],
-    install_requires=requires(),
-    entry_points={
-        "console_scripts": ["jeni = jeni.cmd:main"]
-    }
-)
+        setup_requires=['pbr'],
+        pbr=True)
