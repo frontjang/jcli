@@ -58,6 +58,14 @@ Copy job:
 
     jeni job copy my_current_job my_new_awesome_job
 
+Disable job:
+
+    jeni job disable my_job
+
+Enable job:
+
+    jeni job enable his_job
+
 ### View examples
 
 List all views:

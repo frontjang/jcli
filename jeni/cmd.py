@@ -70,6 +70,14 @@ def create_parser():
         'source_job_name', help='the name of the job to copy')
     job_copy_parser.add_argument(
         'dest_job_name', help='the name of the new job')
+    job_disable_parser = job_action_subparser.add_parser(
+        "disable", help="disable job", parents=[parent_parser])
+    job_disable_parser.add_argument('name',
+                                   help='the name of the job to disable')
+    job_enable_parser = job_action_subparser.add_parser(
+        "enable", help="enables job", parents=[parent_parser])
+    job_enable_parser.add_argument('name',
+                                   help='the name of the job to enable')
 
     # View parser
     view_parser = jeni_subparsers.add_parser("view", parents=[parent_parser])

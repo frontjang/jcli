@@ -59,6 +59,30 @@ class Job(Server):
         else:
             logger.info("No name provided. Exiting...")
 
+    def disable_job(self):
+        """Disables job"""
+
+        try:
+            self.server.disable_job(self.job_args.name)
+
+        except Exception:
+            raise errors.JeniException(
+                "No such job: {}".format(self.job_args.name))
+
+        logger.info("Disabled job: {}".format(self.job_args.name))
+
+    def enable_job(self):
+        """Enables job"""
+
+        try:
+            self.server.enable_job(self.job_args.name)
+
+        except Exception:
+            raise errors.JeniException(
+                "No such job: {}".format(self.job_args.name))
+
+        logger.info("Enabled job: {}".format(self.job_args.name))
+
     def build_job(self):
         """Starts job build"""
 
@@ -104,3 +128,9 @@ class Job(Server):
 
         if self.action == 'copy':
             self.copy_job()
+
+        if self.action == 'disable':
+            self.disable_job()
+
+        if self.action == 'enable':
+            self.enable_job()
