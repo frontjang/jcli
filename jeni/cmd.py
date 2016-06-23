@@ -49,15 +49,21 @@ def create_parser():
 
     # Job sub-commands (count, list, delete)
     job_action_subparser.add_parser(
-        "count", help="Number of jobs", parents=[parent_parser])
+        "count", help="print number of jobs", parents=[parent_parser])
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
-    job_list_parser.add_argument('name', help='job name of part of it',
+    job_list_parser.add_argument('name', help='job name or part of it',
                                  nargs='?')
     job_delete_parser = job_action_subparser.add_parser(
         "delete", help="delete job", parents=[parent_parser])
     job_delete_parser.add_argument('name',
                                    help='the name of the job to delete')
+    job_build_parser = job_action_subparser.add_parser(
+        "build", help="build job", parents=[parent_parser])
+    job_build_parser.add_argument(
+        'name', help='the name of the job to build')
+    job_build_parser.add_argument(
+        '-p', '--parameters', type=str, help='params for parameterized job')
 
     # View parser
     view_parser = jeni_subparsers.add_parser("view", parents=[parent_parser])
@@ -94,11 +100,6 @@ def create_parser():
 
 def main():
     """Jeni Main Entry."""
-    return main_parser
-
-
-def main():
-    """Jeni Main Entry."""
 
     # Parse arguments provided by the user
     parser = create_parser()
@@ -114,29 +115,17 @@ def main():
 
     # 'job' command
     if args.main_command == 'job':
-        if hasattr(args, 'name'):
-            job_executor = Job(args.job_command, url, user, password,
-                               args.name)
-        else:
-            job_executor = Job(args.job_command, url, user, password)
+        job_executor = Job(args.job_command, url, user, password, args)
         job_executor.run()
 
     # 'view' command
     if args.main_command == 'view':
-        if hasattr(args, 'name'):
-            view_executor = View(args.view_command, url, user, password,
-                                 args.name)
-        else:
-            view_executor = View(args.view_command, url, user, password)
+        view_executor = View(args.view_command, url, user, password, args)
         view_executor.run()
 
     # 'node' command
     if args.main_command == 'node':
-        if hasattr(args, 'name'):
-            node_executor = Node(args.node_command, url, user, password,
-                                 args.name)
-        else:
-            node_executor = Node(args.node_command, url, user, password)
+        node_executor = Node(args.node_command, url, user, password, args)
         node_executor.run()
 
 if __name__ == '__main__':

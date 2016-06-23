@@ -14,6 +14,7 @@
 #    under the License.
 
 import jeni.errors as errors
+import json
 import logging
 from server import Server
 
@@ -24,10 +25,10 @@ logger = logging.getLogger()
 class Job(Server):
     """Manages job command execution"""
 
-    def __init__(self, action, url, user, password, name=None):
+    def __init__(self, action, url, user, password, job_args):
         super(Job, self).__init__(url, user, password)
         self.action = action
-        self.name = name
+        self.job_args = job_args
 
     def get_jobs_names(self):
         """Returns list of all jobs name"""
@@ -35,9 +36,9 @@ class Job(Server):
         jobs_names = []
 
         jobs = self.server.get_jobs()
-        if self.name:
+        if self.job_args.name:
             for job_object in jobs:
-                if self.name in job_object['name']:
+                if self.job_args.name in job_object['name']:
                     jobs_names.append(job_object['name'])
         else:
             for job_object in jobs:
@@ -48,14 +49,31 @@ class Job(Server):
     def delete_job(self):
         """Removes job from the server"""
 
-        if self.name:
+        if self.job_args.name:
             try:
-                self.server.delete_job(self.name)
+                self.server.delete_job(self.job_args.name)
             except Exception:
-                raise errors.JeniException("No such job: {}".format(self.name))
-            logger.info("Removed job: {}".format(self.name))
+                raise errors.JeniException(
+                    "No such job: {}".format(self.job_args.name))
+            logger.info("Removed job: {}".format(self.job_args.name))
         else:
             logger.info("No name provided. Exiting...")
+
+    def build_job(self):
+        """Starts job build"""
+
+        try:
+            if self.job_args.parameters:
+                self.server.build_job(self.job_args.name,
+                                      json.loads(self.job_args.parameters))
+                logger.info("Starting job build with parameters: {}".format(
+                    self.job_args.name))
+            else:
+                self.server.build_job(self.job_args.name)
+                logger.info("Starting job build without params: {}".format(
+                    self.job_args.name))
+        except Exception as e:
+            raise errors.JeniException(e)
 
     def run(self):
         """Executes chosen action."""
@@ -69,3 +87,6 @@ class Job(Server):
 
         if self.action == 'delete':
             self.delete_job()
+
+        if self.action == 'build':
+            self.build_job()

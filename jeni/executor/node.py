@@ -24,10 +24,10 @@ logger = logging.getLogger()
 class Node(Server):
     """Manages node command execution"""
 
-    def __init__(self, action, url, user, password, name=None):
+    def __init__(self, action, url, user, password, node_args):
         super(Node, self).__init__(url, user, password)
         self.action = action
-        self.name = name
+        self.node_args = node_args
 
     def get_nodes_names(self):
         """Returns list of all nodes name"""
@@ -35,9 +35,9 @@ class Node(Server):
         nodes_names = []
 
         nodes = self.server.get_nodes()
-        if self.name:
+        if self.node_args.name:
             for node_object in nodes:
-                if self.name in node_object['name']:
+                if self.node_args.name in node_object['name']:
                     nodes_names.append(node_object['name'])
         else:
             for node_object in nodes:
@@ -50,11 +50,11 @@ class Node(Server):
 
         if self.name:
             try:
-                self.server.delete_node(self.name)
+                self.server.delete_node(self.node_args.name)
             except Exception:
                 raise errors.JeniException(
-                    "No such node: {}".format(self.name))
-            logger.info("Removed node: {}".format(self.name))
+                    "No such node: {}".format(self.node_args.name))
+            logger.info("Removed node: {}".format(self.node_args.name))
         else:
             logger.info("No name provided. Exiting...")
 

@@ -15,3 +15,7 @@
 
 class JeniException(Exception):
     pass
+
+
+class HTTPError(Exception):
+    pass

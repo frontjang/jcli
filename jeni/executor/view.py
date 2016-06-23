@@ -24,10 +24,10 @@ logger = logging.getLogger()
 class View(Server):
     """Manages view command execution"""
 
-    def __init__(self, action, url, user, password, name=None):
+    def __init__(self, action, url, user, password, view_args):
         super(View, self).__init__(url, user, password)
         self.action = action
-        self.name = name
+        self.view_args = view_args
 
     def get_views_names(self):
         """Returns list of all views name"""
@@ -35,9 +35,9 @@ class View(Server):
         views_names = []
 
         views = self.server.get_views()
-        if self.name:
+        if self.view_args.name:
             for view_object in views:
-                if self.name in view_object['name']:
+                if self.view_args.name in view_object['name']:
                     views_names.append(view_object['name'])
         else:
             for view_object in views:
@@ -50,11 +50,11 @@ class View(Server):
 
         if self.name:
             try:
-                self.server.delete_view(self.name)
+                self.server.delete_view(self.view_args.name)
             except Exception:
                 raise errors.JeniException(
-                    "No such view: {}".format(self.name))
-            logger.info("Removed view: {}".format(self.name))
+                    "No such view: {}".format(self.view_args.name))
+            logger.info("Removed view: {}".format(self.view_args.name))
         else:
             logger.info("No name provided. Exiting...")
 
