@@ -75,6 +75,17 @@ class Job(Server):
         except Exception as e:
             raise errors.JeniException(e)
 
+    def copy_job(self):
+        """Copies job"""
+
+        try:
+            self.server.copy_job(self.job_args.source_job_name,
+                                 self.job_args.dest_job_name)
+            logger.info("Done copying: {}. The new job is called: {}".format(
+                self.job_args.source_job_name, self.job_args.dest_job_name))
+        except Exception as e:
+            raise errors.JeniException(e)
+
     def run(self):
         """Executes chosen action."""
 
@@ -90,3 +101,6 @@ class Job(Server):
 
         if self.action == 'build':
             self.build_job()
+
+        if self.action == 'copy':
+            self.copy_job()

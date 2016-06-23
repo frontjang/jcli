@@ -1,7 +1,7 @@
 Jeni
 ====
 
-Jenkins Swiss Knife
+The ultimate Jenkins Client ;)
 
 Install
 -------
@@ -51,7 +51,12 @@ Delete job:
     jeni job delete <job_name>
 
 Build parameterized job:
+
     jeni job build <job_name> -p '{"GERRIT_REFSPEC": "my_refspec", "GERRIT_BRANCH": "my_branch", "Cleanup_provisioned_resources":"true"}'
+
+Copy job:
+
+    jeni job copy my_current_job my_new_awesome_job
 
 ### View examples
 

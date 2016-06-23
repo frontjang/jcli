@@ -64,6 +64,12 @@ def create_parser():
         'name', help='the name of the job to build')
     job_build_parser.add_argument(
         '-p', '--parameters', type=str, help='params for parameterized job')
+    job_copy_parser = job_action_subparser.add_parser(
+        "copy", help="copy job", parents=[parent_parser])
+    job_copy_parser.add_argument(
+        'source_job_name', help='the name of the job to copy')
+    job_copy_parser.add_argument(
+        'dest_job_name', help='the name of the new job')
 
     # View parser
     view_parser = jeni_subparsers.add_parser("view", parents=[parent_parser])
