@@ -58,6 +58,19 @@ class View(Server):
         else:
             logger.info("No name provided. Exiting...")
 
+    def list_jobs(self):
+        """Print list of all the jobs in the view"""
+
+        jobs = self.server.get_jobs(view_name=self.view_args.name)
+
+        if jobs:
+            logger.info("The jobs under {}:\n".format(self.view_args.name))
+            for job in jobs:
+                logger.info(job['fullname'])
+        else:
+            logger.info(
+                "No jobs directly under {}\n".format(self.view_args.name))
+
     def run(self):
         """Executes chosen action."""
 
@@ -67,3 +80,6 @@ class View(Server):
 
         if self.action == 'delete':
             self.delete_view()
+
+        if self.action == 'jobs':
+            self.list_jobs()

@@ -84,6 +84,10 @@ Delete view:
 
     jeni view delete <view_name>
 
+List all the jobs under specific view:
+
+    jeni view jobs <view_name>
+
 ### Node examples
 
 List all nodes:

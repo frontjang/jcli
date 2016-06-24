@@ -84,6 +84,10 @@ def create_view_parser(jeni_subparsers, parent_parser):
         "delete", help="delete view", parents=[parent_parser])
     view_delete_parser.add_argument('name',
                                     help='the name of the view to delete')
+    view_jobs_parser = view_action_subparser.add_parser(
+        "jobs", help="List all jobs in specific view", parents=[parent_parser])
+    view_jobs_parser.add_argument(
+        'name', help='the name of the view')
 
 
 def create_node_parser(jeni_subparsers, parent_parser):
