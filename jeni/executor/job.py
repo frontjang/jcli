@@ -110,6 +110,45 @@ class Job(Server):
         except Exception as e:
             raise errors.JeniException(e)
 
+    def last_build(self):
+        """Output information on last build"""
+
+        try:
+            last_build_number = self.server.get_job_info(
+                self.job_args.name)['lastCompletedBuild']['number']
+            build_info = self.server.get_job_info(
+                self.job_args.name, last_build_number)
+            logger.info(
+                "=================== Last build summary ===================\n")
+            logger.info("Build Number: {}".format(last_build_number))
+
+            # Log SCMs
+            logger.info("\nSCMs:\n")
+            for scm in build_info['scm']['configuredSCMs']:
+                for info in scm['userRemoteConfigs']:
+                    logger.info("  Url: {}".format(info['url']))
+                    logger.info(
+                        "  Refspec: {}\n  -----".format(info['refspec']))
+
+            # Log Parameters
+            logger.info("\n\nParameters:\n")
+            for param in build_info['property'][6]['parameterDefinitions']:
+                logger.info("  Parameter: {}\n  Value: {}\n  -----".format(
+                    param['defaultParameterValue']['name'],
+                    param['defaultParameterValue']['value']))
+
+            # Log general build info
+            logger.info("\n\nBuild Duration: {}".format(
+                build_info['lastBuild']['duration']))
+            logger.info("Built on slave: {}".format(
+                build_info['lastBuild']['builtOn']))
+            logger.info("URL: {}".format(build_info['lastBuild']['url']))
+            logger.info(
+                "\nResult: {}".format(build_info['lastBuild']['result']))
+
+        except Exception as e:
+            raise errors.JeniException(e)
+
     def run(self):
         """Executes chosen action."""
 
@@ -134,3 +173,6 @@ class Job(Server):
 
         if self.action == 'enable':
             self.enable_job()
+
+        if self.action == 'last_build':
+            self.last_build()

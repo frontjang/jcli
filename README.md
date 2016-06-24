@@ -66,6 +66,10 @@ Enable job:
 
     jeni job enable his_job
 
+Print information on last build of specific job:
+
+    jeni job last_build super-mario-job
+
 ### View examples
 
 List all views:

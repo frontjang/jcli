@@ -22,37 +22,50 @@ def create_job_parser(jeni_subparsers, parent_parser):
     job_parser = jeni_subparsers.add_parser("job", parents=[parent_parser])
     job_action_subparser = job_parser.add_subparsers(title="action",
                                                      dest="job_command")
-    # Job sub-commands (count, list, delete)
+    # Job sub-commands
+    # Count
     job_action_subparser.add_parser(
         "count", help="print number of jobs", parents=[parent_parser])
+    # List
     job_list_parser = job_action_subparser.add_parser(
         "list", help="list job(s)", parents=[parent_parser])
     job_list_parser.add_argument('name', help='job name or part of it',
                                  nargs='?')
+    # Delete
     job_delete_parser = job_action_subparser.add_parser(
         "delete", help="delete job", parents=[parent_parser])
     job_delete_parser.add_argument('name',
                                    help='the name of the job to delete')
+    # Build job
     job_build_parser = job_action_subparser.add_parser(
         "build", help="build job", parents=[parent_parser])
     job_build_parser.add_argument(
         'name', help='the name of the job to build')
     job_build_parser.add_argument(
         '-p', '--parameters', type=str, help='params for parameterized job')
+    # Copy job
     job_copy_parser = job_action_subparser.add_parser(
         "copy", help="copy job", parents=[parent_parser])
     job_copy_parser.add_argument(
         'source_job_name', help='the name of the job to copy')
     job_copy_parser.add_argument(
         'dest_job_name', help='the name of the new job')
+    # Disable job
     job_disable_parser = job_action_subparser.add_parser(
         "disable", help="disable job", parents=[parent_parser])
     job_disable_parser.add_argument(
         'name', help='the name of the job to disable')
+    # Enable job
     job_enable_parser = job_action_subparser.add_parser(
         "enable", help="enables job", parents=[parent_parser])
     job_enable_parser.add_argument('name',
                                    help='the name of the job to enable')
+    # Print information on last build
+    job_last_build_parser = job_action_subparser.add_parser(
+        "last_build", help="Print information on last build",
+        parents=[parent_parser])
+    job_last_build_parser.add_argument(
+        'name', help='the name of the job')
 
 
 def create_view_parser(jeni_subparsers, parent_parser):
