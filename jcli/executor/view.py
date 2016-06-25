@@ -13,9 +13,10 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import jeni.errors as errors
 import jenkins
 import logging
+
+from jcli import errors
 from server import Server
 
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -53,7 +54,7 @@ class View(Server):
             try:
                 self.server.delete_view(self.view_args.name)
             except Exception:
-                raise errors.JeniException(
+                raise errors.JcliException(
                     "No such view: {}".format(self.view_args.name))
             logger.info("Removed view: {}".format(self.view_args.name))
         else:
@@ -76,10 +77,11 @@ class View(Server):
         """Creates new empty view"""
 
         try:
-            self.server.create_view(self.view_args.name, jenkins.EMPTY_VIEW_CONFIG_XML)
+            self.server.create_view(
+                self.view_args.name, jenkins.EMPTY_VIEW_CONFIG_XML)
             logger.info("Created new view: {}".format(self.view_args.name))
         except Exception as e:
-            raise errors.JeniException(e)
+            raise errors.JcliException(e)
 
     def run(self):
         """Executes chosen action."""

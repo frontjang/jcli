@@ -22,7 +22,7 @@ import parse
 
 
 def main():
-    """Jeni Main Entry."""
+    """Jcli Main Entry."""
 
     # Parse arguments provided by the user
     parser = parse.create_parser()

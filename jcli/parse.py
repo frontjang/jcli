@@ -16,10 +16,10 @@ import argparse
 import getpass
 
 
-def create_job_parser(jeni_subparsers, parent_parser):
+def create_job_parser(client_subparsers, parent_parser):
     """Creates job parser"""
 
-    job_parser = jeni_subparsers.add_parser("job", parents=[parent_parser])
+    job_parser = client_subparsers.add_parser("job", parents=[parent_parser])
     job_action_subparser = job_parser.add_subparsers(title="action",
                                                      dest="job_command")
     # Job sub-commands
@@ -68,10 +68,10 @@ def create_job_parser(jeni_subparsers, parent_parser):
         'name', help='the name of the job')
 
 
-def create_view_parser(jeni_subparsers, parent_parser):
+def create_view_parser(client_subparsers, parent_parser):
     """Creates view parser"""
 
-    view_parser = jeni_subparsers.add_parser("view", parents=[parent_parser])
+    view_parser = client_subparsers.add_parser("view", parents=[parent_parser])
     view_action_subparser = view_parser.add_subparsers(title="action",
                                                        dest="view_command")
 
@@ -91,15 +91,15 @@ def create_view_parser(jeni_subparsers, parent_parser):
         'name', help='the name of the view')
     view_create_parser = view_action_subparser.add_parser(
         "create", help="create view", parents=[parent_parser])
-    view_create_parser.add_argument('name', help='name of the view',
-                                  nargs='?')
+    view_create_parser.add_argument(
+        'name', help='name of the view', nargs='?')
 
 
-def create_node_parser(jeni_subparsers, parent_parser):
+def create_node_parser(client_subparsers, parent_parser):
     """Creates node parser"""
 
     # Node parser
-    node_parser = jeni_subparsers.add_parser("node", parents=[parent_parser])
+    node_parser = client_subparsers.add_parser("node", parents=[parent_parser])
     node_action_subparser = node_parser.add_subparsers(title="action",
                                                        dest="node_command")
 
@@ -117,21 +117,21 @@ def create_node_parser(jeni_subparsers, parent_parser):
 def create_parser():
     """Returns argument parser"""
 
-    # Jeni top level parser
+    # Jcli top level parser
     parent_parser = argparse.ArgumentParser(add_help=False)
     parent_parser.add_argument('--user', '-u', default=getpass.getuser(),
                                help='username')
     parent_parser.add_argument('--config', '-c', dest="config",
-                               help='jeni configuration file')
+                               help='client configuration file')
     parent_parser.add_argument('--debug', required=False, action='store_true',
                                dest="debug", help='debug flag')
 
     main_parser = argparse.ArgumentParser()
-    jeni_subparsers = main_parser.add_subparsers(title="jeni",
-                                                 dest="main_command")
+    client_subparsers = main_parser.add_subparsers(
+        title="client", dest="main_command")
 
-    create_job_parser(jeni_subparsers, parent_parser)
-    create_view_parser(jeni_subparsers, parent_parser)
-    create_node_parser(jeni_subparsers, parent_parser)
+    create_job_parser(client_subparsers, parent_parser)
+    create_view_parser(client_subparsers, parent_parser)
+    create_node_parser(client_subparsers, parent_parser)
 
     return main_parser

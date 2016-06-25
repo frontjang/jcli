@@ -17,9 +17,9 @@ import logging
 import os
 from six.moves import configparser
 
-from errors import JeniException
+from errors import JcliException
 
-DEFAULT_CONF_FILE = '/etc/jeni/jeni.conf'
+DEFAULT_CONF_FILE = '/etc/jcli/config.ini'
 
 
 def read(conf_file):
@@ -28,7 +28,7 @@ def read(conf_file):
     :param conf_file: the config file.
     """
 
-    cwd_conf_file = os.path.join(os.getcwd(), 'jeni.conf')
+    cwd_conf_file = os.path.join(os.getcwd(), 'config.ini')
 
     if os.path.isfile(cwd_conf_file):
         config_file = cwd_conf_file
@@ -45,7 +45,7 @@ def read(conf_file):
         config_data = io.open(config_file, 'r', encoding='utf-8')
         config.readfp(config_data)
     except Exception:
-        raise JeniException(
+        raise JcliException(
             "A valid configuration file is required."
             "\n{0} is not a valid configuration file".format(config_file))
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright 2016 Arie Bregman
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -13,14 +12,10 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import jenkins
+
+class JcliException(Exception):
+    pass
 
 
-class Server(object):
-    """A base class for Jeni Execute.
-
-    The module is initialized before any command is executed.
-    """
-
-    def __init__(self, url, user, password):
-        self.server = jenkins.Jenkins(url, user, password)
+class HTTPError(Exception):
+    pass

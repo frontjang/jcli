@@ -13,9 +13,10 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import jeni.errors as errors
 import json
 import logging
+
+from jcli import errors
 from server import Server
 
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -53,7 +54,7 @@ class Job(Server):
             try:
                 self.server.delete_job(self.job_args.name)
             except Exception:
-                raise errors.JeniException(
+                raise errors.JcliException(
                     "No such job: {}".format(self.job_args.name))
             logger.info("Removed job: {}".format(self.job_args.name))
         else:
@@ -66,7 +67,7 @@ class Job(Server):
             self.server.disable_job(self.job_args.name)
 
         except Exception:
-            raise errors.JeniException(
+            raise errors.JcliException(
                 "No such job: {}".format(self.job_args.name))
 
         logger.info("Disabled job: {}".format(self.job_args.name))
@@ -78,7 +79,7 @@ class Job(Server):
             self.server.enable_job(self.job_args.name)
 
         except Exception:
-            raise errors.JeniException(
+            raise errors.JcliException(
                 "No such job: {}".format(self.job_args.name))
 
         logger.info("Enabled job: {}".format(self.job_args.name))
@@ -97,7 +98,7 @@ class Job(Server):
                 logger.info("Starting job build without params: {}".format(
                     self.job_args.name))
         except Exception as e:
-            raise errors.JeniException(e)
+            raise errors.JcliException(e)
 
     def copy_job(self):
         """Copies job"""
@@ -108,7 +109,7 @@ class Job(Server):
             logger.info("Done copying: {}. The new job is called: {}".format(
                 self.job_args.source_job_name, self.job_args.dest_job_name))
         except Exception as e:
-            raise errors.JeniException(e)
+            raise errors.JcliException(e)
 
     def last_build(self):
         """Output information on last build"""
@@ -147,7 +148,7 @@ class Job(Server):
                 "\nResult: {}".format(build_info['lastBuild']['result']))
 
         except Exception as e:
-            raise errors.JeniException(e)
+            raise errors.JcliException(e)
 
     def run(self):
         """Executes chosen action."""

@@ -13,8 +13,9 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import jeni.errors as errors
 import logging
+
+from jcli import errors
 from server import Server
 
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -52,7 +53,7 @@ class Node(Server):
             try:
                 self.server.delete_node(self.node_args.name)
             except Exception:
-                raise errors.JeniException(
+                raise errors.JcliException(
                     "No such node: {}".format(self.node_args.name))
             logger.info("Removed node: {}".format(self.node_args.name))
         else:

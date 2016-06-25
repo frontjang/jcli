@@ -1,24 +1,24 @@
-Jeni
-====
+Jcli - Jenkins Command-line Interface
+=====================================
 
-The ultimate Jenkins Client ;)
+The ultimate Jenkins ClI ;)
 
 Install
 -------
 
-To install Jeni on your system, run the following command:
+To install jcli on your system, run the following command:
 
     sudo pip install .
 
 Setup config
 ------------
 
-Jeni is using configuartion file to connect the server.
+jcli is using configuartion file to connect the server.
 
 It can be setup in one of the following paths:
 
-    /etc/jenkins/jeni.conf
-    `pwd`/jeni.conf
+    /etc/jcli/config.ini
+    `pwd`/config.ini
 
 or it can passed as an argument.
 
@@ -36,71 +36,71 @@ Examples
 
 Print list of all the jobs:
 
-    jeni job list
+    jcli job list
 
 Print jobs which contain the string 'coreci' in their names:
 
-    jeni job list coreci
+    jcli job list coreci
 
 Print the number of jobs on Jenkins server:
 
-    jeni job count
+    jcli job count
 
 Delete job:
    
-    jeni job delete <job_name>
+    jcli job delete <job_name>
 
 Build parameterized job:
 
-    jeni job build <job_name> -p '{"GERRIT_REFSPEC": "my_refspec", "GERRIT_BRANCH": "my_branch", "Cleanup_provisioned_resources":"true"}'
+    jcli job build <job_name> -p '{"GERRIT_REFSPEC": "my_refspec", "GERRIT_BRANCH": "my_branch", "Cleanup_provisioned_resources":"true"}'
 
 Copy job:
 
-    jeni job copy my_current_job my_new_awesome_job
+    jcli job copy my_current_job my_new_awesome_job
 
 Disable job:
 
-    jeni job disable my_job
+    jcli job disable my_job
 
 Enable job:
 
-    jeni job enable his_job
+    jcli job enable his_job
 
 Print information on last build of specific job:
 
-    jeni job last_build super-mario-job
+    jcli job last_build super-mario-job
 
 ### View examples
 
 List all views:
 
-    jeni view list
+    jcli view list
 
 List views that contain the string 'hello':
 
-    jeni view list hello
+    jcli view list hello
 
 Delete view:
 
-    jeni view delete view90 
+    jcli view delete view90 
 
 List all the jobs under specific view:
 
-    jeni view jobs view1
+    jcli view jobs view1
 
 Create new view:
 
-    jeni view create new_view
+    jcli view create new_view
 
 ### Node examples
 
 List all nodes:
 
-    jeni node list
+    jcli node list
 
 Delete node:
 
-    jeni node delete <node_name>
+    jcli node delete <node_name>
 
 License
 -------
