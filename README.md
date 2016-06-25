@@ -82,11 +82,15 @@ List views that contain the string 'hello':
 
 Delete view:
 
-    jeni view delete <view_name>
+    jeni view delete view90 
 
 List all the jobs under specific view:
 
-    jeni view jobs <view_name>
+    jeni view jobs view1
+
+Create new view:
+
+    jeni view create new_view
 
 ### Node examples
 

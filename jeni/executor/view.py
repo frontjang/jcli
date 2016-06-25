@@ -14,6 +14,7 @@
 #    under the License.
 
 import jeni.errors as errors
+import jenkins
 import logging
 from server import Server
 
@@ -71,6 +72,15 @@ class View(Server):
             logger.info(
                 "No jobs directly under {}\n".format(self.view_args.name))
 
+    def create_view(self):
+        """Creates new empty view"""
+
+        try:
+            self.server.create_view(self.view_args.name, jenkins.EMPTY_VIEW_CONFIG_XML)
+            logger.info("Created new view: {}".format(self.view_args.name))
+        except Exception as e:
+            raise errors.JeniException(e)
+
     def run(self):
         """Executes chosen action."""
 
@@ -83,3 +93,6 @@ class View(Server):
 
         if self.action == 'jobs':
             self.list_jobs()
+
+        if self.action == 'create':
+            self.create_view()
