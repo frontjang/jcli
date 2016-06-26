@@ -102,6 +102,17 @@ Delete node:
 
     jcli node delete <node_name>
 
+### Plugin examples
+
+List all installed plugins:
+
+    jcli plugin list
+
+List infromation on specific plugin:
+
+    jcli plugin list python
+
+
 License
 -------
 

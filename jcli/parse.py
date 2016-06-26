@@ -114,6 +114,20 @@ def create_node_parser(client_subparsers, parent_parser):
                                     help='the name of the node to delete')
 
 
+def create_plugin_parser(client_subparsers, parent_parser):
+    """Creates plugin parser"""
+
+    # Plugin parser
+    plugin_parser = client_subparsers.add_parser("plugin", parents=[parent_parser])
+    plugin_action_subparser = plugin_parser.add_subparsers(title="action",
+                                                       dest="plugin_command")
+
+    # Plugin sub-commands
+    plugin_list_parser = plugin_action_subparser.add_parser(
+        "list", help="list plugin(s)", parents=[parent_parser])
+    plugin_list_parser.add_argument('name', help='the plugin name',
+                                  nargs='?')
+
 def create_parser():
     """Returns argument parser"""
 
@@ -133,5 +147,6 @@ def create_parser():
     create_job_parser(client_subparsers, parent_parser)
     create_view_parser(client_subparsers, parent_parser)
     create_node_parser(client_subparsers, parent_parser)
+    create_plugin_parser(client_subparsers, parent_parser)
 
     return main_parser

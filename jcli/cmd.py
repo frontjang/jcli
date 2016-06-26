@@ -17,6 +17,7 @@ import sys
 import config
 from executor.job import Job
 from executor.node import Node
+from executor.plugin import Plugin
 from executor.view import View
 import parse
 
@@ -50,6 +51,11 @@ def main():
     if args.main_command == 'node':
         node_executor = Node(args.node_command, url, user, password, args)
         node_executor.run()
+
+    # 'plugin' command
+    if args.main_command == 'plugin':
+        plugin_executor = Plugin(args.plugin_command, url, user, password, args)
+        plugin_executor.run()
 
 if __name__ == '__main__':
     sys.exit(main())

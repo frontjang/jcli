@@ -50,7 +50,7 @@ class View(Server):
     def delete_view(self):
         """Removes view from the server"""
 
-        if self.name:
+        if self.view_args.name:
             try:
                 self.server.delete_view(self.view_args.name)
             except Exception:

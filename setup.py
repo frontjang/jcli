@@ -12,6 +12,8 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import setuptools
+from setuptools import setup
 
-setuptools.setup(setup_requires=['pbr'], pbr=True)
+setup(
+    setup_requires=['pbr'],
+    pbr=True)
